@@ -8,6 +8,8 @@ from app.models import Tovar
 from .forms import TovarForm
 
 tovar_bp = Blueprint('tovari', __name__, template_folder='templates', static_folder='static')
+
+
 @tovar_bp.route('/tovar_add', methods=['GET', 'POST'])
 @login_required
 def tovar_add():

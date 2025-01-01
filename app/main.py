@@ -1,9 +1,9 @@
-import requests
-from flask import Flask, jsonify
+from datetime import datetime
+# import redis
+from flask import Flask
 from flask_migrate import Migrate
 from flask_admin import Admin
 from flask_sqlalchemy import SQLAlchemy
-
 from database import Config
 from flask_login import LoginManager
 
@@ -19,6 +19,7 @@ db = SQLAlchemy(app)
 
 migrate = Migrate(app, db)
 admin = Admin(app, name='My Admin Panel', template_mode='bootstrap4')
+# redis_client = redis.Redis(host= '0.0.0.0' , port= 6379 , db= 0 )
 
 from .models import User
 
@@ -53,18 +54,30 @@ app.register_blueprint(tovar_bp)
 app.register_blueprint(catalog_bp)
 
 
-@app.route('/get_course', methods=['GET'])
-def get_course():
-    try:
-        response = requests.get('https://api.exchangerate.host/latest?base=USD&symbols=RUB')
-        data = response.json()
+# @app.route('/get_course', methods=['GET'])
+# def get_course():
+#     try:
+#         response = requests.get('https://api.exchangerate.host/latest?base=USD&symbols=RUB')
+#         data = response.json()
+#
+#         error_type = data.get('error', {}).get('type')
+#         succ = data.get('success')
+#         return {'err': error_type, 'succ': succ}
+#
+#     except requests.exceptions.RequestException as e:
+#         return jsonify({'error': str(e)}), 500
 
-        error_type = data.get('error', {}).get('type')
-        succ = data.get('success')
-        return {'err': error_type, 'succ': succ}
-
-    except requests.exceptions.RequestException as e:
-        return jsonify({'error': str(e)}), 500
+@app.route('/time', methods=['GET'])
+def time():
+    red = redis.from_url("redis://redis/0")
+    key = 'time'
+    cache = red.get(key)
+    if cache is None:
+        time = datetime.now().strftime('%H:%M:%S')
+        red.set(key, time, ex=10)
+    else:
+        time = cache
+    return time
 
 
 if __name__ == '__main__':

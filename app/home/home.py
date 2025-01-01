@@ -1,7 +1,5 @@
-from flask import Blueprint, render_template, flash
+from flask import Blueprint, render_template
 from flask_login import current_user, login_user, logout_user
-from ..beautifulsoup.main import get_curs
-
 
 from app.models import Tovar
 from app.main import korzina
@@ -15,6 +13,5 @@ def index():
     korzin = korzina()
     tovar = Tovar.query.all()
     kolvo = len(korzin)
-    flash(get_curs())
 
     return render_template('home/index.html', tovars=tovar, korzina=kolvo)
