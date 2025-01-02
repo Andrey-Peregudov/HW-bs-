@@ -37,8 +37,11 @@ with app.app_context():
     # print(have_user)
     if not have_user:
         from seed import seeds
-
         seeds()
+    from seed import seed_user
+    seed_user()
+
+
 
 from .auth.auth import auth_bp
 from .home.home import home_bp

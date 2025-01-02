@@ -20,7 +20,7 @@ class SecureModelView(ModelView):
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = sa.Column(sa.Integer, primary_key=True)
-    name = sa.Column(sa.String(255), nullable=False, unique=True, index=True)
+    name = sa.Column(sa.String(255), nullable=False, index=True)
     password_hash = sa.Column(sa.String(255), nullable=False)
     email = sa.Column(sa.String(255), nullable=True, index=True)
     phone_number = sa.Column(sa.String(255), nullable=True,  index=True)
