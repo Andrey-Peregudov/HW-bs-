@@ -36,4 +36,11 @@
     {% endfor %}
 
 
+{% set id_page = offset|int %}
+<span>омер страницы - {{id_page//10|int }}</span>
+{% if id_page>10 %}
+    <a href="{{ url_for('catalog.catalog', offset=id_page - 10) }}">&lArr; Страница назад</a>
+{% endif %}
+    <a href="{{ url_for('catalog.catalog', offset=id_page + 10) }}">Страница Вперёд &rArr;</a>
+
 {% endblock %}

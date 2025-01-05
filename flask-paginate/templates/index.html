@@ -17,10 +17,15 @@
 
     <a href="{{ url_for('index', offset=id_page + 10) }}">Newer posts</a>
 
-{#    <a href="{{ prev_url }}">Newer posts</a>#}
+{#    <a href="{{ prev_url }}">Newer posts</a>#}ss
 {##}
 {##}
 
+
+<div class="pagination">
+    {% set id_page = offset|int %}
+    <a href="{{ url_for('catalog', offset=id_page + 10) }}">Newer posts</a>
+</div>
 
 </body>
 </html>

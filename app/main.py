@@ -38,8 +38,8 @@ with app.app_context():
     if not have_user:
         from seed import seeds
         seeds()
-    from seed import seed_user
-    seed_user()
+    # from seed import seed_user
+    # seed_user()
 
 
 
